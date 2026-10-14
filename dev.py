@@ -9,5 +9,5 @@ import os
 import uvicorn
 
 if __name__ == "__main__":
-    os.environ["DEV"] = "1"
+    os.environ["APP_DEV_FAKE_SIGNIN"] = "1"
     uvicorn.run("app.main:app", host="127.0.0.1", port=int(os.environ.get("PORT") or 3001), reload=True, reload_dirs=["app"], log_config="logging.json")

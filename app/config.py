@@ -8,8 +8,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
-# `uv run dev.py`: a fake signed-in user, no sign-in in front (none with SIGNIN=none). Never on the server.
-DEV = os.environ.get("DEV") == "1"
+# `uv run dev.py`: a fake signed-in user, no sign-in in front (none with SIGNIN=none). Set by dev.py
+# alone, under a name nothing else uses, and never where PM2 runs the app (pm_id), as on the server.
+DEV = os.environ.get("APP_DEV_FAKE_SIGNIN") == "1" and "pm_id" not in os.environ
 
 APP_NAME = os.environ.get("APP_NAME") or "My app"
 

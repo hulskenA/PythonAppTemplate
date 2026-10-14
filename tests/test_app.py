@@ -40,7 +40,7 @@ class Running:
         self.base = f"http://127.0.0.1:{self.port}"
         self.process = subprocess.Popen(
             [sys.executable, "-m", "uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", str(self.port), "--log-config", "logging.json"],
-            cwd=ROOT, env={**os.environ, "DEV": "", "SIGNIN": "", "APP_NAME": "", **env}, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+            cwd=ROOT, env={**os.environ, "APP_DEV_FAKE_SIGNIN": "", "SIGNIN": "", "APP_NAME": "", **env}, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
         )
         for _ in range(100):
             try:
@@ -170,7 +170,7 @@ class PublicApp(unittest.TestCase):
 
 class DevMode(unittest.TestCase):
     def test_it_signs_in_a_fake_user_with_the_groups_asked_for(self):
-        dev = Running(DEV="1", DEV_USER="sam", DEV_GROUPS="devs,qa")
+        dev = Running(APP_DEV_FAKE_SIGNIN="1", DEV_USER="sam", DEV_GROUPS="devs,qa")
         try:
             me = dev.call("/api/me").json()["me"]
             self.assertEqual((me["user"], me["groups"]), ("sam", ["devs", "qa"]))
@@ -178,7 +178,7 @@ class DevMode(unittest.TestCase):
             dev.stop()
 
     def test_with_signin_none_it_runs_as_the_public_app(self):
-        dev = Running(DEV="1", SIGNIN="none")
+        dev = Running(APP_DEV_FAKE_SIGNIN="1", SIGNIN="none")
         try:
             self.assertIsNone(dev.call("/api/me").json()["me"])
         finally:

@@ -1,17 +1,24 @@
 # Tests on every push and pull request.
 #
-# Deploys after the tests (Control Center 0.19 deploy links), off until set up:
+# Deploys after the tests (Control Center deploy links), off until set up:
 #   production: repository variable CC_DEPLOY_URL (the app's deploy link) and secret
 #               CC_DEPLOY_TOKEN; pushes to main that pass the tests are deployed.
 #   staging:    variable CC_STAGING_URL and secret CC_STAGING_TOKEN (the staging copy's link);
 #               pushes to other branches are sent; the copy deploys only the branch it follows.
 # Both from the app's page in the panel (Deploy from CI), saved in GitHub under
 # Settings > Secrets and variables > Actions.
+#
+# Branch names and links reach the shell only as environment variables, never pasted into a
+# command: a branch called x'$(…)' runs nothing.
 name: CI
 
 on:
   push:
+    branches: ['**']
   pull_request:
+
+permissions:
+  contents: read
 
 jobs:
   test:
@@ -29,13 +36,13 @@ jobs:
     steps:
       - name: Ask the server to deploy this commit
         env:
+          URL: ${{ vars.CC_DEPLOY_URL }}
           TOKEN: ${{ secrets.CC_DEPLOY_TOKEN }}
-        run: >
-          curl -fsS -X POST
-          -H "Authorization: Bearer $TOKEN"
-          -H "Content-Type: application/json"
-          -d '{"sha":"${{ github.sha }}","branch":"${{ github.ref_name }}"}'
-          "${{ vars.CC_DEPLOY_URL }}"
+          SHA: ${{ github.sha }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          jq -n --arg sha "$SHA" --arg branch "$BRANCH" '{sha: $sha, branch: $branch}' |
+            curl -fsS -X POST -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" --data @- "$URL"
 
   deploy-staging:
     needs: test
@@ -44,10 +51,10 @@ jobs:
     steps:
       - name: Ask the staging copy to deploy this commit (if it follows this branch)
         env:
+          URL: ${{ vars.CC_STAGING_URL }}
           TOKEN: ${{ secrets.CC_STAGING_TOKEN }}
-        run: >
-          curl -fsS -X POST
-          -H "Authorization: Bearer $TOKEN"
-          -H "Content-Type: application/json"
-          -d '{"sha":"${{ github.sha }}","branch":"${{ github.ref_name }}"}'
-          "${{ vars.CC_STAGING_URL }}"
+          SHA: ${{ github.sha }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          jq -n --arg sha "$SHA" --arg branch "$BRANCH" '{sha: $sha, branch: $branch}' |
+            curl -fsS -X POST -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" --data @- "$URL"
