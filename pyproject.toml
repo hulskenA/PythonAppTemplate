@@ -1,0 +1,19 @@
+[project]
+name = "my-app"
+version = "0.1.0"
+description = "An app for the server, started from the Python app template."
+requires-python = ">=3.12"
+# What the app needs to run. Add one with `uv add <name>`: it also updates uv.lock, which the
+# server installs from. Commit both files.
+dependencies = [
+    "starlette>=1.0",
+    "uvicorn>=0.40",
+]
+
+[dependency-groups]
+# Tools for your PC only (`uv add --dev <name>`). The server installs without them.
+dev = []
+
+[tool.uv]
+# The app runs from its folder; it is not built into a package.
+package = false

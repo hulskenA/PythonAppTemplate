@@ -1,0 +1,4 @@
+# The server is Linux: keep Unix line endings in the repository, whatever the PC uses.
+* text=auto eol=lf
+*.png binary
+*.woff2 binary

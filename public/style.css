@@ -1,0 +1,58 @@
+/* The app's own styles, on top of the charter (ds/tokens.css and ds/bundle.css). Keep colours,
+   fonts and spacing to the charter's variables: var(--ink), var(--space-4)… */
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--ground); }
+.material-symbols-outlined { font-family: "Material Symbols Outlined"; font-weight: 300; font-style: normal; font-size: 20px; line-height: 1; letter-spacing: normal; text-transform: none; white-space: nowrap; direction: ltr; -webkit-font-smoothing: antialiased; font-variation-settings: "opsz" 20; }
+.shell { min-height: 100vh; overflow: hidden; display: flex; flex-direction: column; font-family: var(--font-text); color: var(--ink); }
+code { font-family: var(--font-mono); font-size: 0.92em; padding: 1px 5px; border-radius: 4px; background: var(--surface-raised); }
+
+/* Type */
+.h1 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 44px; line-height: 48px; letter-spacing: -0.02em; }
+.h2 { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 22px; line-height: 28px; }
+.lead { margin: 0; max-width: 680px; font-size: 19px; line-height: 30px; }
+.data { font-family: var(--font-mono); font-size: 13px; line-height: 20px; }
+.small { font-size: 14px; line-height: 22px; }
+.soft { color: var(--ink-soft); }
+.row-wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+
+/* Header, main, footer */
+.top { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 48px; padding-top: 24px; padding-bottom: 24px; }
+.nav { display: flex; flex-wrap: wrap; gap: 4px 28px; flex-grow: 1; }
+.nav a { display: inline-flex; align-items: center; min-height: 44px; font-family: var(--font-mono); font-size: 13px; line-height: 20px; color: var(--ink-soft); text-decoration: none; }
+.nav a[aria-current="page"] { color: var(--ink); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 8px; }
+.who { display: flex; align-items: center; gap: 12px; }
+.who .material-symbols-outlined { color: var(--ink-soft); }
+.main { display: flex; flex-direction: column; gap: 32px; padding-top: 40px; padding-bottom: 48px; flex-grow: 1; }
+.intro-text { display: flex; flex-direction: column; gap: 12px; }
+.foot { padding-top: 16px; padding-bottom: 48px; }
+
+/* Controls */
+.link-btn { display: inline-flex; align-items: center; min-height: 44px; padding: 0; border: 0; background: none; color: var(--link); font-family: var(--font-mono); font-size: 13px; line-height: 20px; text-decoration: underline; cursor: pointer; }
+.link-btn:hover { color: var(--ink); }
+.link-btn:focus-visible, .ah-btn:focus-visible { outline: var(--stroke-mark) solid var(--ink); outline-offset: 2px; }
+.ah-btn:disabled { opacity: 0.6; cursor: wait; }
+.form-error { margin: 0; padding: 12px 16px; border: 2px solid var(--danger); border-radius: var(--radius-md); font-size: 14px; line-height: 22px; }
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 20; max-width: min(560px, calc(100vw - 32px)); box-sizing: border-box; padding: 14px 20px; background: var(--surface-raised); color: var(--ink); border: 1px solid var(--line-strong); border-radius: var(--radius-md); font-size: 14px; line-height: 22px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5); }
+.toast[data-kind="error"] { border: 2px solid var(--danger); }
+
+/* The example page: replace with your own */
+.columns { display: grid; grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr); gap: 24px; align-items: start; }
+.panel { display: flex; flex-direction: column; gap: 20px; padding: 24px; }
+.panel-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; }
+.post-form { display: flex; flex-direction: column; gap: 16px; }
+.messages { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.messages li { display: flex; flex-direction: column; gap: 4px; padding: 14px 0; border-top: 1px solid var(--glass-line); }
+.msg-text { white-space: pre-wrap; overflow-wrap: anywhere; }
+.msg-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; }
+.msg-meta .link-btn { min-height: 24px; }
+.facts { display: flex; flex-direction: column; gap: 16px; }
+.facts dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 10px 16px; margin: 0; }
+.facts dt { padding-top: 2px; }
+.facts dd { margin: 0; overflow-wrap: anywhere; }
+.facts p { margin: 0; }
+
+@media (max-width: 760px) {
+  .columns { grid-template-columns: 1fr; }
+  .h1 { font-size: 36px; line-height: 40px; }
+  .lead { font-size: 17px; line-height: 27px; }
+}

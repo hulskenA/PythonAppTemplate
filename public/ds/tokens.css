@@ -1,0 +1,32 @@
+/* Charter: tokens (version 6). Load before bundle.css. */
+:root {
+  --ground: #0C0809;
+  --pool-bordeaux: #7A1730;
+  --pool-red: #D8323C;
+  --pool-violet: #5B3FB8;
+  --ink: #F7F1F2;
+  --ink-soft: #EBDADD;
+  --glass: rgba(14, 8, 10, 0.5);
+  --glass-line: rgba(255, 255, 255, 0.16);
+  --line-strong: rgba(255, 255, 255, 0.6);
+  --accent-from: #D13A40;
+  --accent-to: #A81E45;
+  --on-accent: #FFFFFF;
+  --word-from: #FF7A7F;
+  --word-to: #C3A6FF;
+  --link: #FFC2C5;
+  --surface: #1A1517;
+  --surface-raised: #241D20;
+  --success: #7BE08A;
+  --warning: #F0C05A;
+  --danger: #FF8F93;
+
+  --font-display: "Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
+  --font-text: "B612", Verdana, system-ui, sans-serif;
+  --font-mono: "B612 Mono", "DejaVu Sans Mono", Menlo, monospace;
+
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px;
+  --space-8: 32px; --space-12: 48px; --space-16: 64px; --space-28: 112px;
+  --radius-md: 12px; --radius-lg: 16px; --radius-pill: 999px;
+  --stroke-hair: 1px; --stroke-mark: 2px;
+}

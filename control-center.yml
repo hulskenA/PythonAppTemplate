@@ -1,0 +1,24 @@
+# control-center.yml: how the admin panel creates and deploys this app.
+# "Add an app" in the panel finds this file in the repository and fills its form with it.
+# No secrets here: this file is on GitHub. Secrets go on the app's page in the panel.
+
+name: my-app                 # lower case letters, digits and dashes; its folder and PM2 name
+branch: main
+
+kind: python
+install: uv sync --locked --no-dev   # installs exactly what uv.lock lists (commit it), into .venv
+start: .venv/bin/uvicorn app.main:app --host 127.0.0.1 --port $PORT --log-config logging.json
+health: /health
+memory_mb: 256
+
+address: my-app              # becomes my-app.<your domain>
+construction: true           # starts on the construction page; launch it from its page when ready
+
+access: group                # public | account | group | admins
+group: admins                # who may open it; several groups go one per line:
+#   - friends
+#   - qa
+
+env:
+  APP_NAME: My app           # shown in the page's header and title
+  SIGNIN: required           # required behind the sign-in; none with access: public

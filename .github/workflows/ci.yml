@@ -1,0 +1,53 @@
+# Tests on every push and pull request.
+#
+# Deploys after the tests (Control Center 0.19 deploy links), off until set up:
+#   production: repository variable CC_DEPLOY_URL (the app's deploy link) and secret
+#               CC_DEPLOY_TOKEN; pushes to main that pass the tests are deployed.
+#   staging:    variable CC_STAGING_URL and secret CC_STAGING_TOKEN (the staging copy's link);
+#               pushes to other branches are sent; the copy deploys only the branch it follows.
+# Both from the app's page in the panel (Deploy from CI), saved in GitHub under
+# Settings > Secrets and variables > Actions.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --locked
+      - run: uv run python -m unittest discover -s tests
+
+  deploy:
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.CC_DEPLOY_URL != ''
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ask the server to deploy this commit
+        env:
+          TOKEN: ${{ secrets.CC_DEPLOY_TOKEN }}
+        run: >
+          curl -fsS -X POST
+          -H "Authorization: Bearer $TOKEN"
+          -H "Content-Type: application/json"
+          -d '{"sha":"${{ github.sha }}","branch":"${{ github.ref_name }}"}'
+          "${{ vars.CC_DEPLOY_URL }}"
+
+  deploy-staging:
+    needs: test
+    if: github.event_name == 'push' && github.ref != 'refs/heads/main' && vars.CC_STAGING_URL != ''
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ask the staging copy to deploy this commit (if it follows this branch)
+        env:
+          TOKEN: ${{ secrets.CC_STAGING_TOKEN }}
+        run: >
+          curl -fsS -X POST
+          -H "Authorization: Bearer $TOKEN"
+          -H "Content-Type: application/json"
+          -d '{"sha":"${{ github.sha }}","branch":"${{ github.ref_name }}"}'
+          "${{ vars.CC_STAGING_URL }}"

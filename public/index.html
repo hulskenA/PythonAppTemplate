@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My app</title>
+<link rel="icon" href="/duck.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=B612:wght@400;700&family=B612+Mono:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300,0,0&display=swap">
+<link rel="stylesheet" href="/ds/tokens.css">
+<link rel="stylesheet" href="/ds/bundle.css">
+<link rel="stylesheet" href="/style.css">
+<script type="module" src="/app.js"></script>
+</head>
+<body>
+<div class="ah-ground ah-scale shell">
+
+<header class="ah-page top">
+  <a class="ah-lockup" href="/">
+    <svg viewBox="2 2 104 92" aria-hidden="true"><path d="M8 54L24 62L44 52L40 32L46 16L60 8L74 10L84 20L86 30L100 34L96 43L84 43L78 52L90 62L92 76L82 88L26 88L12 76Z"/><path class="ah-dot" d="M86 30L100 34L96 43L84 43Z"/><path d="M44 52L78 52M60 8L44 52M60 8L78 52M86 30L78 52M44 52L26 88M44 52L58 88M78 52L58 88M78 52L92 76M24 62L26 88M24 62L12 76"/></svg>
+    <span data-app-name>My app</span>
+  </a>
+  <nav aria-label="Sections" class="nav">
+    <a href="/" aria-current="page">Home</a>
+  </nav>
+  <div class="who" id="who" hidden>
+    <span class="material-symbols-outlined" aria-hidden="true">account_circle</span>
+    <span class="data soft" id="who-name"></span>
+    <a class="link-btn" id="sign-out" href="#" hidden>Sign out</a>
+  </div>
+</header>
+
+<main class="ah-page main">
+  <div class="intro">
+    <div class="intro-text">
+      <span class="ah-label" id="hello-label">Hello</span>
+      <h1 class="h1">Welcome to <span class="ah-word" data-app-name>My app</span></h1>
+      <p class="lead">A starting point in the house style: the sign-in, a small API, and the charter's cards, fields and buttons. Replace this page with your app.</p>
+    </div>
+  </div>
+
+  <div class="columns">
+    <section class="ah-surface panel" aria-labelledby="board-title">
+      <div class="panel-head"><h2 class="h2" id="board-title">Message board</h2><span class="small soft">An example to replace: kept in memory, gone at each restart.</span></div>
+      <form id="post-form" class="post-form" novalidate>
+        <div class="ah-field">
+          <label for="post-text">Your message</label>
+          <textarea id="post-text" rows="3" maxlength="500" placeholder="Say hello"></textarea>
+        </div>
+        <p class="form-error" id="post-error" role="alert" hidden></p>
+        <div class="row-wrap"><button class="ah-btn" type="submit" id="post-btn">Post it</button><span class="small soft" id="post-note"></span></div>
+      </form>
+      <ul class="messages" id="messages" aria-live="polite"></ul>
+    </section>
+
+    <aside class="ah-card facts" aria-labelledby="facts-title">
+      <h2 class="h2" id="facts-title">You</h2>
+      <dl id="facts"></dl>
+      <p class="small soft" id="facts-note">From the sign-in, on every request. On your PC, <code>uv run dev.py</code> signs you in as a fake user instead.</p>
+    </aside>
+  </div>
+</main>
+
+<footer class="ah-page foot">
+  <a class="ah-signature" href="/">
+    <svg viewBox="1 1 106 94" aria-hidden="true"><path d="M8 54L24 62L44 52L40 32L46 16L60 8L74 10L84 20L86 30L100 34L96 43L84 43L78 52L90 62L92 76L82 88L26 88L12 76Z"/><path class="ah-dot" d="M86 30L100 34L96 43L84 43Z"/><path d="M44 52L78 52M60 8L44 52M60 8L78 52M86 30L78 52M44 52L26 88M44 52L58 88M78 52L58 88M78 52L92 76M24 62L26 88M24 62L12 76"/></svg>
+    <span data-app-name>My app</span>
+  </a>
+</footer>
+
+<div class="toast" id="toast" role="status" hidden></div>
+</div>
+</body>
+</html>

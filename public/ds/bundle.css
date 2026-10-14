@@ -1,0 +1,88 @@
+/* Charter: component classes. Load after tokens.css. */
+
+.ah-ground { position: relative; background-color: var(--ground); color: var(--ink); background-image:
+  radial-gradient(ellipse 55% 75% at 22% 112%, color-mix(in srgb, var(--pool-red) 40%, transparent) 0%, color-mix(in srgb, var(--pool-red) 36%, transparent) 16%, color-mix(in srgb, var(--pool-red) 27.2%, transparent) 32%, color-mix(in srgb, var(--pool-red) 16.8%, transparent) 48%, color-mix(in srgb, var(--pool-red) 8.4%, transparent) 64%, color-mix(in srgb, var(--pool-red) 2.8%, transparent) 80%, transparent 100%),
+  radial-gradient(ellipse 120% 150% at 32% 118%, color-mix(in srgb, var(--pool-bordeaux) 92%, transparent) 0%, color-mix(in srgb, var(--pool-bordeaux) 82.8%, transparent) 16%, color-mix(in srgb, var(--pool-bordeaux) 62.6%, transparent) 32%, color-mix(in srgb, var(--pool-bordeaux) 38.6%, transparent) 48%, color-mix(in srgb, var(--pool-bordeaux) 19.3%, transparent) 64%, color-mix(in srgb, var(--pool-bordeaux) 6.4%, transparent) 80%, transparent 100%),
+  radial-gradient(ellipse 100% 140% at 96% -18%, color-mix(in srgb, var(--pool-violet) 46%, transparent) 0%, color-mix(in srgb, var(--pool-violet) 41.4%, transparent) 16%, color-mix(in srgb, var(--pool-violet) 31.3%, transparent) 32%, color-mix(in srgb, var(--pool-violet) 19.3%, transparent) 48%, color-mix(in srgb, var(--pool-violet) 9.7%, transparent) 64%, color-mix(in srgb, var(--pool-violet) 3.2%, transparent) 80%, transparent 100%); }
+.ah-ground--long { --ah-cycle: clamp(3600px, 250vw, 5200px); --ah-pool: clamp(900px, 125vw, 2800px);
+  background-repeat: no-repeat, no-repeat, repeat-y, repeat-y, repeat-y, repeat-y, repeat-y, repeat-y;
+  background-size: 100% 100%, 100% 100%, 100% var(--ah-cycle), 100% var(--ah-cycle), 100% var(--ah-cycle), 100% var(--ah-cycle), 100% var(--ah-cycle), 100% var(--ah-cycle);
+  background-position: 0 0, 0 0,
+    0 calc(var(--ah-cycle) * -0.5), 0 calc(var(--ah-cycle) * -0.26), 0 calc(var(--ah-cycle) * -0.25),
+    0 0, 0 calc(var(--ah-cycle) * 0.24), 0 calc(var(--ah-cycle) * 0.25);
+  background-image:
+  radial-gradient(calc(var(--ah-pool) * 0.4) circle at 38% 101%, color-mix(in srgb, var(--pool-red) 40%, transparent) 0%, color-mix(in srgb, var(--pool-red) 36%, transparent) 16%, color-mix(in srgb, var(--pool-red) 27.2%, transparent) 32%, color-mix(in srgb, var(--pool-red) 16.8%, transparent) 48%, color-mix(in srgb, var(--pool-red) 8.4%, transparent) 64%, color-mix(in srgb, var(--pool-red) 2.8%, transparent) 80%, transparent 100%),
+  radial-gradient(calc(var(--ah-pool) * 0.85) circle at 30% 102%, color-mix(in srgb, var(--pool-bordeaux) 92%, transparent) 0%, color-mix(in srgb, var(--pool-bordeaux) 82.8%, transparent) 16%, color-mix(in srgb, var(--pool-bordeaux) 62.6%, transparent) 32%, color-mix(in srgb, var(--pool-bordeaux) 38.6%, transparent) 48%, color-mix(in srgb, var(--pool-bordeaux) 19.3%, transparent) 64%, color-mix(in srgb, var(--pool-bordeaux) 6.4%, transparent) 80%, transparent 100%),
+  radial-gradient(ellipse calc(var(--ah-pool) * 1) calc(var(--ah-cycle) * 0.42) at 80% 50%, color-mix(in srgb, var(--pool-violet) 42%, transparent) 0%, color-mix(in srgb, var(--pool-violet) 37.8%, transparent) 16%, color-mix(in srgb, var(--pool-violet) 28.6%, transparent) 32%, color-mix(in srgb, var(--pool-violet) 17.6%, transparent) 48%, color-mix(in srgb, var(--pool-violet) 8.8%, transparent) 64%, color-mix(in srgb, var(--pool-violet) 2.9%, transparent) 80%, transparent 100%),
+  radial-gradient(ellipse calc(var(--ah-pool) * 0.5) calc(var(--ah-cycle) * 0.2) at 18% 50%, color-mix(in srgb, var(--pool-red) 26%, transparent) 0%, color-mix(in srgb, var(--pool-red) 23.4%, transparent) 16%, color-mix(in srgb, var(--pool-red) 17.7%, transparent) 32%, color-mix(in srgb, var(--pool-red) 10.9%, transparent) 48%, color-mix(in srgb, var(--pool-red) 5.5%, transparent) 64%, color-mix(in srgb, var(--pool-red) 1.8%, transparent) 80%, transparent 100%),
+  radial-gradient(ellipse calc(var(--ah-pool) * 1.15) calc(var(--ah-cycle) * 0.44) at 30% 50%, color-mix(in srgb, var(--pool-bordeaux) 66%, transparent) 0%, color-mix(in srgb, var(--pool-bordeaux) 59.4%, transparent) 16%, color-mix(in srgb, var(--pool-bordeaux) 44.9%, transparent) 32%, color-mix(in srgb, var(--pool-bordeaux) 27.7%, transparent) 48%, color-mix(in srgb, var(--pool-bordeaux) 13.9%, transparent) 64%, color-mix(in srgb, var(--pool-bordeaux) 4.6%, transparent) 80%, transparent 100%),
+  radial-gradient(ellipse calc(var(--ah-pool) * 1) calc(var(--ah-cycle) * 0.42) at 20% 50%, color-mix(in srgb, var(--pool-violet) 40%, transparent) 0%, color-mix(in srgb, var(--pool-violet) 36%, transparent) 16%, color-mix(in srgb, var(--pool-violet) 27.2%, transparent) 32%, color-mix(in srgb, var(--pool-violet) 16.8%, transparent) 48%, color-mix(in srgb, var(--pool-violet) 8.4%, transparent) 64%, color-mix(in srgb, var(--pool-violet) 2.8%, transparent) 80%, transparent 100%),
+  radial-gradient(ellipse calc(var(--ah-pool) * 0.5) calc(var(--ah-cycle) * 0.2) at 84% 50%, color-mix(in srgb, var(--pool-red) 22%, transparent) 0%, color-mix(in srgb, var(--pool-red) 19.8%, transparent) 16%, color-mix(in srgb, var(--pool-red) 15%, transparent) 32%, color-mix(in srgb, var(--pool-red) 9.2%, transparent) 48%, color-mix(in srgb, var(--pool-red) 4.6%, transparent) 64%, color-mix(in srgb, var(--pool-red) 1.5%, transparent) 80%, transparent 100%),
+  radial-gradient(ellipse calc(var(--ah-pool) * 1.15) calc(var(--ah-cycle) * 0.44) at 72% 50%, color-mix(in srgb, var(--pool-bordeaux) 62%, transparent) 0%, color-mix(in srgb, var(--pool-bordeaux) 55.8%, transparent) 16%, color-mix(in srgb, var(--pool-bordeaux) 42.2%, transparent) 32%, color-mix(in srgb, var(--pool-bordeaux) 26%, transparent) 48%, color-mix(in srgb, var(--pool-bordeaux) 13%, transparent) 64%, color-mix(in srgb, var(--pool-bordeaux) 4.3%, transparent) 80%, transparent 100%); }
+
+.ah-page { box-sizing: border-box; padding-left: clamp(var(--space-4), 3.4vw, var(--space-16)); padding-right: clamp(var(--space-4), 3.4vw, var(--space-16)); }
+.ah-section { display: flex; flex-wrap: wrap; gap: var(--space-6) clamp(var(--space-8), 5vw, 96px); }
+.ah-section__title { flex: 0 0 clamp(200px, 19vw, 320px); margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(40px, 3.3vw, 60px); line-height: 1.05; letter-spacing: -0.02em; }
+.ah-section__body { flex: 999 1 420px; min-width: 0; display: flex; flex-direction: column; gap: var(--space-6); }
+.ah-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(max(250px, 22%), 1fr)); gap: var(--space-4); }
+.ah-display-xl { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(52px, 7.4vw, 128px); line-height: 0.95; letter-spacing: -0.03em; }
+.ah-lead { margin: 0; max-width: 680px; font-family: var(--font-text); font-size: clamp(19px, 1.35vw, 23px); line-height: 1.6; }
+@media (min-width: 2200px) { .ah-scale { zoom: 1.2; } }
+@media (min-width: 2700px) { .ah-scale { zoom: 1.4; } }
+@media (min-width: 3300px) { .ah-scale { zoom: 1.7; } }
+
+.ah-lockup { display: inline-flex; align-items: center; gap: var(--space-3); color: var(--ink); text-decoration: none; }
+.ah-lockup svg { display: block; height: 40px; width: auto; fill: none; stroke: currentColor; stroke-width: 3.5; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 8; }
+.ah-lockup .ah-dot { fill: currentColor; }
+.ah-lockup span { font-family: var(--font-display); font-weight: 600; font-size: 20px; line-height: 1; letter-spacing: -0.01em; }
+.ah-lockup--stacked { flex-direction: column; align-items: flex-start; gap: var(--space-4); }
+.ah-lockup--stacked svg { height: 64px; }
+.ah-lockup--stacked span { font-size: 28px; }
+
+.ah-signature { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--ink-soft); text-decoration: none; transition: color 200ms ease; }
+.ah-signature svg { display: block; height: 24px; width: auto; fill: none; stroke: currentColor; stroke-width: 5; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 8; }
+.ah-signature .ah-dot { fill: currentColor; }
+.ah-signature span { font-family: var(--font-mono); font-weight: 700; font-size: 12px; line-height: 16px; letter-spacing: 0.08em; text-transform: uppercase; }
+a.ah-signature { min-height: 44px; }
+a.ah-signature:hover { color: var(--ink); }
+a.ah-signature:focus-visible { outline: var(--stroke-mark) solid var(--ink); outline-offset: 2px; }
+.ah-signature--ink, a.ah-signature--ink:hover { color: #1A0E11; }
+
+.ah-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: 48px; padding: 0 var(--space-6); box-sizing: border-box; border: 0; border-radius: var(--radius-md); background: linear-gradient(90deg, var(--accent-from), var(--accent-to)); color: var(--on-accent); font-family: var(--font-text); font-weight: 700; font-size: 15px; line-height: 1; text-decoration: none; cursor: pointer; transition: transform 200ms ease, filter 200ms ease, border-color 200ms ease; }
+.ah-btn:hover { transform: translateY(-2px); filter: brightness(1.12); }
+.ah-btn:focus-visible { outline: var(--stroke-mark) solid var(--ink); outline-offset: 2px; }
+.ah-btn--quiet { background: transparent; border: var(--stroke-hair) solid var(--line-strong); color: var(--ink); }
+.ah-btn--quiet:hover { filter: none; border-color: var(--ink); }
+
+.ah-label { font-family: var(--font-mono); font-weight: 700; font-size: 12px; line-height: 16px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+.ah-label--plate { display: inline-block; padding: var(--space-1) var(--space-3); border: var(--stroke-hair) solid var(--line-strong); border-radius: var(--radius-pill); color: var(--ink); }
+
+.ah-card { box-sizing: border-box; padding: var(--space-6); background-color: var(--glass); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); border: var(--stroke-hair) solid var(--glass-line); border-radius: var(--radius-lg); color: var(--ink); }
+.ah-card--link { text-decoration: none; transition: transform 250ms ease, border-color 250ms ease; }
+.ah-card--link:hover { transform: translateY(-3px); border-color: var(--line-strong); }
+.ah-card--link:focus-visible { outline: var(--stroke-mark) solid var(--ink); outline-offset: 2px; }
+
+.ah-surface { box-sizing: border-box; background-color: var(--surface); color: var(--ink); border: var(--stroke-hair) solid var(--glass-line); border-radius: var(--radius-lg); }
+
+.ah-field { display: flex; flex-direction: column; gap: var(--space-2); }
+.ah-field label { font-family: var(--font-mono); font-weight: 700; font-size: 12px; line-height: 16px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+.ah-field input, .ah-field textarea, .ah-field select { box-sizing: border-box; width: 100%; min-height: 48px; padding: var(--space-3) var(--space-4); background-color: var(--surface-raised); color: var(--ink); border: var(--stroke-hair) solid var(--line-strong); border-radius: var(--radius-md); font-family: var(--font-text); font-size: 16px; line-height: 22px; transition: border-color 200ms ease; }
+.ah-field input::placeholder, .ah-field textarea::placeholder { color: var(--ink-soft); opacity: 0.75; }
+.ah-field input:hover, .ah-field textarea:hover, .ah-field select:hover { border-color: var(--ink); }
+.ah-field input:focus-visible, .ah-field textarea:focus-visible, .ah-field select:focus-visible { outline: var(--stroke-mark) solid var(--ink); outline-offset: 2px; }
+.ah-field small { font-family: var(--font-text); font-size: 14px; line-height: 22px; color: var(--ink-soft); }
+.ah-field--error input, .ah-field--error textarea { border-color: var(--danger); }
+.ah-field--error small { color: var(--danger); }
+
+.ah-status { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-1) var(--space-3); border: var(--stroke-hair) solid currentColor; border-radius: var(--radius-pill); font-family: var(--font-mono); font-weight: 700; font-size: 12px; line-height: 16px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+.ah-status::before { content: ""; width: 8px; height: 8px; background: currentColor; transform: rotate(45deg); }
+.ah-status--success { color: var(--success); }
+.ah-status--warning { color: var(--warning); }
+.ah-status--danger { color: var(--danger); }
+
+.ah-word { background: linear-gradient(90deg, var(--word-from), var(--word-to)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ah-btn, .ah-card--link, .ah-signature, .ah-field input, .ah-field textarea, .ah-field select { transition: none; }
+  .ah-btn:hover, .ah-card--link:hover { transform: none; }
+}
