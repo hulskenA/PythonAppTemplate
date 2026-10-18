@@ -14,6 +14,16 @@ DEV = os.environ.get("APP_DEV_FAKE_SIGNIN") == "1" and "pm_id" not in os.environ
 
 APP_NAME = os.environ.get("APP_NAME") or "My app"
 
+# Where the app keeps files and SQLite databases. On the server (database: sqlite or postgres in
+# control-center.yml) the panel sets it to the app's own folder, kept across deploys and
+# rollbacks; locally it is data/ in the project (not in git). Never write into the code folder:
+# each deploy is a new one.
+DATA_DIR = Path(os.environ.get("DATA_DIR") or ROOT / "data").resolve()
+DATA_DIR.mkdir(parents=True, exist_ok=True)
+
+# database: postgres only: postgresql://<role>:<password>@127.0.0.1:5432/<db>. Empty otherwise.
+DATABASE_URL = os.environ.get("DATABASE_URL") or ""
+
 # How the app knows who is signed in.
 #   required  the sign-in is in front (access: account, group or admins). The account comes
 #             from the headers nginx sets after the sign-in; a request without them is refused.

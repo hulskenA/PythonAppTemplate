@@ -10,6 +10,10 @@ install: uv sync --locked --no-dev   # installs exactly what uv.lock lists (comm
 start: .venv/bin/uvicorn app.main:app --host 127.0.0.1 --port $PORT --log-config logging.json
 health: /health
 memory_mb: 256
+# database: sqlite           # none (default) | sqlite | postgres. sqlite and postgres give the app
+#                            # DATA_DIR, its own folder kept across deploys; postgres also gives
+#                            # DATABASE_URL, its own database (needs PostgreSQL on the server).
+#                            # Switch between sqlite and postgres only before the first deploy.
 
 address: my-app              # becomes my-app.<your domain>
 construction: true           # starts on the construction page; launch it from its page when ready
