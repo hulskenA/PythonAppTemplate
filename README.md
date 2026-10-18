@@ -147,6 +147,8 @@ they stay on the server and reach the app as environment variables. Read both in
 | `APP_NAME` | `My app` | Shown in the header and the title |
 | `SIGNIN` | `required` | `required` behind the sign-in; `none` for a public app |
 | `SIGNIN_URL` | `https://auth.<the app's domain>` | The sign-in's address, for **Sign out** |
+| `DATA_DIR` | `data/` in the project | The app's own folder for files and SQLite (see A database) |
+| `DATABASE_URL` | empty | `database: postgres` only: the app's PostgreSQL database |
 | `PORT` | `3001` locally | On the server the panel sets it and the start command passes it to uvicorn |
 
 **Public apps:** with `access: public`, set `SIGNIN: none`. Change both together if you change the
@@ -172,12 +174,27 @@ requests too, since they are Starlette's (this has not been tried in the templat
 `docs/`, `public/` and the ideas of `app/auth.py`, add `gunicorn`, and change the start command
 (`.venv/bin/gunicorn -b 127.0.0.1:$PORT ...`).
 
+## A database
+
+Set `database:` in `control-center.yml` (or on the app's page, Control Center 0.20):
+
+| Value | The app gets |
+|---|---|
+| `none` (default) | Nothing: no data kept across deploys |
+| `sqlite` | `DATA_DIR`, its own folder on the server, kept across deploys and rollbacks. Put SQLite files there, with Python's own `sqlite3` module (no package to add) |
+| `postgres` | `DATA_DIR`, and `DATABASE_URL`, its own database on the server's PostgreSQL. Add a PostgreSQL client package (for example `uv add psycopg`) |
+
+`app/config.py` reads both. Locally, `DATA_DIR` is `data/` in the project (made at start, not in git)
+and `DATABASE_URL` is empty unless you set it. The panel copies each database every night (the
+last 7 kept). Choose before the first deploy: switching between `sqlite` and `postgres` later
+is refused, since the panel does not convert data. A staging copy starts with its own empty data.
+
 ## Rules worth keeping
 
 - Escape what you put in a page (`esc()` in `public/common.js`); never build HTML from raw input.
 - Calls that change something go through `api()`, which sends the header the server checks.
-- Data in memory is gone at each deploy and restart. For data to keep, add a database or files
-  outside the app's folder (each deploy is a new folder).
+- Data in memory is gone at each deploy and restart. For data to keep, use `DATA_DIR` or
+  `DATABASE_URL` (see A database), never the app's folder (each deploy is a new folder).
 - Keep `/health` cheap: the panel calls it every 30 seconds.
 - A route that waits (a slow API, a big file) should be an `async def` that awaits, or it holds
   up everyone else: the app is one process.
