@@ -136,6 +136,38 @@ class BehindTheSignIn(unittest.TestCase):
         self.assertEqual(again.status, 304, "an unchanged file is not sent twice")
 
 
+class WidgetsOnHub(unittest.TestCase):
+    """Hub's three requests, as Hub sends them: the viewer's sign-in headers, X-Requested-By."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.app = Running(APP_NAME="Test app")
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.app.stop()
+
+    def test_the_app_offers_its_widget_to_the_person_asking(self):
+        self.assertEqual(self.app.call("/hub").status, 401, "only behind the sign-in")
+        offer = self.app.call("/hub", headers=as_user("lea", ["friends"])).json()
+        self.assertEqual((offer["hub"], offer["name"]), (1, "Test app"))
+        self.assertEqual([w["id"] for w in offer["widgets"]], ["latest"])
+        self.assertEqual(offer["widgets"][0]["settings"][0]["options"], ["Everyone's", "Mine"])
+
+    def test_a_widget_is_built_for_the_viewer_and_its_button_acts_as_them(self):
+        zoe = as_user("zoe", [])
+        r = self.app.call("/hub/widgets/latest/actions/hello", "POST", {**zoe, "Content-Type": "application/json"}, "{}")
+        self.assertEqual(r.status, 403, "buttons need the header Hub sends")
+        r = self.app.call("/hub/widgets/latest/actions/hello", "POST", {**zoe, "X-Requested-By": "hub", "Content-Type": "application/json"}, "{}")
+        self.assertEqual(r.json(), {"ok": True, "message": "Posted."})
+        mine = self.app.call("/hub/widgets/latest?size=tall&show=Mine", headers=zoe).json()
+        items = mine["blocks"][0]["items"]
+        self.assertTrue(items and all(i["meta"] == "ZOE" for i in items), "Mine: only the viewer's messages")
+        self.assertEqual(self.app.call("/hub/widgets/nope", headers=zoe).status, 404)
+        r = self.app.call("/hub/widgets/latest/actions/nope", "POST", {**zoe, "X-Requested-By": "hub"})
+        self.assertEqual((r.status, r.json()["ok"]), (404, False))
+
+
 class PublicApp(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -158,6 +190,7 @@ class PublicApp(unittest.TestCase):
         me = self.app.call("/api/me").json()
         self.assertEqual((me["signin"], me["signOut"]), ("none", None))
         self.assertEqual(self.app.call("/api/messages").status, 200, "reading needs no sign-in")
+        self.assertEqual(self.app.call("/hub", headers=as_user("forged", ["admins"])).status, 404, "a public app offers no widget")
         r = self.app.call("/api/messages", "POST", {"Content-Type": "application/json"}, '{"text":"hi"}')
         self.assertEqual(r.status, 403, "changes still need the app's own header")
         status = 200

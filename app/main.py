@@ -32,7 +32,7 @@ async def health(request: Request):
 async def pages(request: Request):
     """Everything that is not a route above: the files of public/."""
     path = request.url.path
-    if path.startswith("/api/"):
+    if path.startswith("/api/") or path == "/hub" or path.startswith("/hub/"):
         known = any(route.matches(request.scope)[0] != Match.NONE for route in api_routes)
         raise HttpError(405, "Method not allowed.") if known else HttpError(404, "No such API route.")
     if request.method not in ("GET", "HEAD"):

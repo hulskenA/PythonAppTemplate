@@ -22,6 +22,9 @@ access: group                # public | account | group | admins
 group: admins                # who may open it; several groups go one per line:
 #   - friends
 #   - qa
+# open_paths: /runner/v1/    # paths reached without the sign-in, for machines with their own
+#                            # token (node and python apps behind the sign-in, Control Center
+#                            # 0.21); up to 5, one per line as for group. The app checks the token.
 
 env:
   APP_NAME: My app           # shown in the page's header and title

@@ -16,6 +16,8 @@ What it already does:
   restarts it.
 - **Tests** and a **local mode** (`uv run dev.py`) with a fake signed-in user.
 - **A guide** (`docs/`): the app's page on the documentation site, updated by each deploy.
+- **A widget on Hub**, the server's home page: each person sees the app's latest news on their
+  board, built for them (see Widgets on Hub).
 
 The home page is an example (a message board kept in memory): replace it.
 
@@ -85,7 +87,8 @@ Commit `pyproject.toml` and `uv.lock` together, every time. The tests say when t
 
 | Path | What |
 |---|---|
-| `app/routes.py` | The app's API: add routes here. Each returns a value (sent as JSON) or raises `HttpError` |
+| `app/routes.py` | The app's API: add routes here. Each returns a value (sent as JSON) or raises `HttpError`. Also the app's widgets on Hub (`widgets`) |
+| `app/hub.py` | Answers Hub's requests for the widgets: nothing to change in it |
 | `app/auth.py` | `who`, `require_user`, `require_group`: who is signed in |
 | `app/config.py` | Everything read from the environment |
 | `app/http.py` | Answers, JSON bodies, the same-origin check, static files, security headers |
@@ -188,6 +191,53 @@ Set `database:` in `control-center.yml` (or on the app's page, Control Center 0.
 and `DATABASE_URL` is empty unless you set it. The panel copies each database every night (the
 last 7 kept). Choose before the first deploy: switching between `sqlite` and `postgres` later
 is refused, since the panel does not convert data. A staging copy starts with its own empty data.
+
+## Open paths
+
+A part of the app that machines call with their own token (a runner, a webhook) can skip the
+sign-in (Control Center 0.21):
+
+```yaml
+open_paths:
+  - /hooks/
+```
+
+nginx does not ask the sign-in on those paths and empties the `Remote-*` headers, so nobody is
+signed in there: `who(request)` finds no one. Add those routes in `app/routes.py` without
+`require_user` (pages outside the routes still need an account), and check the caller's token yourself (keep it in Secrets, compare it in constant time). Up to 5 paths, each
+starting and ending with `/`, never `/` itself; not with `access: public`.
+
+## Widgets on Hub
+
+Hub (`hub.<your domain>`) shows each person the apps they can open, and a board of widgets from
+those apps. The app offers its widgets in `app/routes.py`, under `widgets`; `app/hub.py` answers
+Hub. The example offers **Latest messages**, with a setting (everyone's or mine) and a
+**Say hello** button.
+
+```python
+def latest_content(me, size, settings):          # me: who is asking, as in who(request)
+    return {"blocks": [{"type": "stat", "label": "Messages", "value": "12"}]}
+
+widgets = {
+    "name": APP_NAME, "icon": "forum", "summary": "One line about the app.",
+    "widgets": {
+        "latest": {
+            "title": "Latest messages",
+            "sizes": ["small", "wide", "tall"],     # the first is the default
+            "settings": [{"id": "show", "label": "Show", "options": ["Everyone's", "Mine"]}],
+            "content": latest_content,             # may be an async def
+            "actions": {"hello": say_hello},       # say_hello(me, arg, size, settings)
+        },
+    },
+}
+```
+
+- Hub asks with the viewer's sign-in headers: build each widget for `me`, and check rights as in
+  any route (`"groups": ["admins"]` on a widget keeps it for that group).
+- The blocks are `stat`, `list`, `progress`, `bars`, `text` and `buttons`; links go to the server's
+  own addresses only. The whole format is in ObjimoHub's `WIDGETS.md`.
+- No widget: leave `widgets` empty. A public app (`SIGNIN: none`) offers none, since Hub could not
+  tell who is asking.
 
 ## Rules worth keeping
 

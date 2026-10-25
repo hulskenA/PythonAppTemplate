@@ -65,7 +65,7 @@ def text(body: str, status: int = 200, headers: dict | None = None) -> Response:
 
 def error_answer(request: Request, status: int, message: str) -> Response:
     """An error as the pages expect it: JSON with ok and message for the API, text otherwise."""
-    if request.url.path.startswith("/api/"):
+    if request.url.path.startswith(("/api/", "/hub")):
         return JSONResponse({"ok": False, "message": message}, status, headers={"Cache-Control": "no-store", **SECURITY_HEADERS})
     return text(f"{message}\n", status, headers=SECURITY_HEADERS)
 
